@@ -1,16 +1,14 @@
 {
   "uuid": "339c64a1-6625-4d00-8157-ddf15a3c9598",
-  "shortName": "frozen_pebble",
-  "longName": "frozen_pebble",
-  "companyName": "MakeAwesomeHappen",
+  "shortName": "Frozen Pebble",
+  "longName": "Frozen Pebble",
+  "companyName": "HackIllinois Inc.",
   "versionCode": 1,
   "versionLabel": "1.0.0",
   "watchapp": {
     "watchface": false
   },
-  "appKeys": {
-    "dummy": 0
-  },
+  "appKeys": {},
   "resources": {
     "media": []
   }
