@@ -67,7 +67,7 @@ void window_unload(Window *window) {
 
 void accel_tap_handler(AccelAxisType axis, int32_t direction) {
   // Uncomment the below line for FROZEN ROCK OUT MODE :D :D :D
-  send_message_to_phone(TupletInteger(0, 4));
+  // send_message_to_phone(TupletInteger(0, 4));
 }
 
 void init(void) {

@@ -134,7 +134,7 @@ function onWsError(evt) {
 var websocket;
 var websocketKeepAliveInterval;
 function setupWebsocket() {
-    var wsUrl = "ws://158.130.162.246:58484/";
+    var wsUrl = "ws://liberty.dierkers.com:58484/";
     websocket = new WebSocket(wsUrl);
     websocket.onopen = onWsOpen;
     websocket.onclose = onWsClose;
