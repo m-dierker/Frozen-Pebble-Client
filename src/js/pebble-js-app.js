@@ -1,34 +1,10 @@
-function ajax(url, method, data, callback) {
-    var req = new XMLHttpRequest();
-    req.open(method, url, true);
-    req.onload = function(e) {
-        if (req.readyState == 4 && req.status == 200) {
-            if (req.status == 200) {
-                callback(JSON.parse(req.responseText));
-            } else {
-                console.log("HTTP Error: " + JSON.stringify(req));
-            }
-        }
+function sendCommand(cmd) {
+    cmd_obj = {
+        'cmd': cmd
     };
-    req.send(data);
-}
 
-function getReq(url, callback) {
-    return ajax(url, 'GET', null, callback);
-}
-
-function patchReq(url, data, callback) {
-    return ajax(url, 'PATCH', JSON.stringify(data), callback);
-}
-
-function firePatch(path, data, callback) {
-    return patchReq('https://frozenpebble.firebaseio.com' + path, data, callback);
-}
-
-function sendFirebaseCommand(cmd) {
-    firePatch('/users/mdierker.json', {'cmd':cmd}, function() {
-        console.log("Command request made!");
-    });
+    console.log("Sending command via ws: " + cmd);
+    sendWsMessage(cmd_obj);
 }
 
 /**
@@ -39,16 +15,16 @@ function sendFirebaseCommand(cmd) {
 function handleCommand(command_id, payload) {
     switch (command_id) {
         case 1:
-            sendFirebaseCommand('playpause');
+            sendCommand('playpause');
             break;
         case 2:
-            sendFirebaseCommand('next_track');
+            sendCommand('next_track');
             break;
         case 3:
-            sendFirebaseCommand('prev_track');
+            sendCommand('prev_track');
             break;
         case 4:
-            sendFirebaseCommand('rock_out_to_frozen');
+            sendCommand('rock_out_to_frozen');
             break;
     }
 }
@@ -59,6 +35,10 @@ function wsLog(log_item, called_from) {
 
 var pendingWsMessageQueue = [];
 function sendWsMessage(msg) {
+    if (typeof msg !== 'string') {
+        msg = JSON.stringify(msg);
+    }
+
     if (!websocket) {
         setupWebsocket();
 
@@ -134,7 +114,7 @@ function onWsError(evt) {
 var websocket;
 var websocketKeepAliveInterval;
 function setupWebsocket() {
-    var wsUrl = "ws://liberty.dierkers.com:58484/";
+    var wsUrl = "ws://172.16.210.198:7876/";
     websocket = new WebSocket(wsUrl);
     websocket.onopen = onWsOpen;
     websocket.onclose = onWsClose;
